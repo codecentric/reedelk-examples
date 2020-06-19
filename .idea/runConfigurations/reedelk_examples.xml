@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="reedelk-examples" type="REEDELK_MODULE_CONFIGURATION" factoryName="REEDELK_MODULE_RUN_CONFIGURATION_FACTORY">
+    <option name="ModuleRunConfiguration-RuntimeConfigName" value="Reedelk Runtime" />
+    <option name="ModuleRunConfiguration-ModuleName" value="reedelk-examples" />
+    <method v="2">
+      <option name="ReedelkModule.BeforeRunTask" enabled="true" />
+    </method>
+  </configuration>
+</component>

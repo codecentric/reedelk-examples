@@ -1,0 +1,71 @@
+{
+  "id": "1b89e9c0-7278-4694-8245-bf6906cd126f",
+  "title": "GET Purchase Orders",
+  "description": "Collects and merges all purchase orders from local shop and online shop",
+  "flow": [
+    {
+      "implementor": "com.reedelk.rest.component.RESTListener",
+      "description": "GET /order endpoint",
+      "configuration": {"ref": "1ce6668e-b252-4921-910b-61eb085b5d49"},
+      "path": "/order",
+      "method": "GET",
+      "streaming": "AUTO",
+      "response": {
+        "body": "#[message.payload()]",
+        "status": 200
+      },
+      "errorResponse": {
+        "body": "#[error]",
+        "status": 500
+      }
+    },
+    {
+      "implementor": "com.reedelk.runtime.component.Fork",
+      "fork": [
+        {"next": [
+          {
+            "implementor": "com.reedelk.rest.component.RESTClient",
+            "description": "Fetch Online Shop Orders",
+            "configuration": {"ref": "a7a5ec8f-6282-4cd8-9603-bfc45639884b"},
+            "path": "/online_orders.json",
+            "method": "GET"
+          },
+          {
+            "implementor": "com.reedelk.json.component.JSONToObject",
+            "description": "JSON to Object description"
+          }
+        ]},
+        {"next": [
+          {
+            "implementor": "com.reedelk.core.component.ResourceReadText",
+            "description": "Read Local Orders",
+            "resourceFile": "assets/local_order_sample.json",
+            "autoMimeType": true
+          },
+          {
+            "implementor": "com.reedelk.json.component.JSONToObject",
+            "description": "JSON to Object description"
+          },
+          {
+            "implementor": "com.reedelk.core.component.PayloadSet",
+            "description": "Extract orders JSON property",
+            "mimeType": "application/java",
+            "payload": "#[message.payload().shop.orders]"
+          }
+        ]}
+      ]
+    },
+    {
+      "implementor": "com.reedelk.core.component.PayloadSet",
+      "description": "Payload Set description",
+      "mimeType": "application/java",
+      "payload": "#[message.payload().flatten()]"
+    },
+    {
+      "implementor": "com.reedelk.json.component.ObjectToJSON",
+      "description": "Object to JSON description",
+      "prettyPrint": true,
+      "indentFactor": 2
+    }
+  ]
+}

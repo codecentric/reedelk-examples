@@ -1,0 +1,13 @@
+{
+  "id": "a7a5ec8f-6282-4cd8-9603-bfc45639884b",
+  "title": "Tutorials API config",
+  "implementor": "com.reedelk.rest.component.RESTClientConfiguration",
+  "host": "www.reedelk.com",
+  "port": 443,
+  "basePath": "/tutorials",
+  "protocol": "HTTPS",
+  "keepAlive": true,
+  "followRedirects": true,
+  "authentication": "NONE",
+  "proxy": "NONE"
+}

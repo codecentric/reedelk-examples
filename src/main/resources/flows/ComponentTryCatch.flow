@@ -1,0 +1,74 @@
+{
+  "id": "784dce53-65b7-4d02-8bac-75cd715d7a03",
+  "title": "Try Catch component example",
+  "description": "Deletes an order with the ID provided in the request path from a tmp directory. If an error occurred it is logged in a 'orders_errors.txt' file on the file system.",
+  "flow": [
+    {
+      "implementor": "com.reedelk.rest.component.RESTListener",
+      "description": "DELETE /order endpoint",
+      "configuration": {"ref": "1ce6668e-b252-4921-910b-61eb085b5d49"},
+      "path": "/order/{id}",
+      "method": "DELETE",
+      "streaming": "AUTO",
+      "response": {
+        "body": "#[context.errorMessage ? context.errorMessage : message.payload()]",
+        "status": "#[context.errorStatus ? context.errorStatus : 200]"
+      },
+      "errorResponse": {
+        "body": "#[error]",
+        "status": 500
+      }
+    },
+    {
+      "implementor": "com.reedelk.core.component.VariableSet",
+      "description": "Defines an 'orderId' variable containing the value of the HTTP request 'id' path param",
+      "name": "orderId",
+      "mimeType": "text/plain",
+      "value": "#[message.attributes().pathParams.id]"
+    },
+    {
+      "implementor": "com.reedelk.runtime.component.TryCatch",
+      "try": [
+        {
+          "implementor": "com.reedelk.file.component.FileDelete",
+          "description": "Deletes the order file from the given context 'orderId' variable",
+          "fileName": "#[Util.tmpdir() + context.orderId + '.json']"
+        },
+        {
+          "implementor": "com.reedelk.core.component.PayloadSet",
+          "description": "Set return message body",
+          "mimeType": "text/plain",
+          "payload": "#['Order with id ' + context.orderId + ' successfully deleted.']"
+        }
+      ],
+      "catch": [
+        {
+          "implementor": "com.reedelk.core.component.PayloadSet",
+          "description": "Sets the message to be written in the error log file",
+          "mimeType": "text/plain",
+          "payload": "#['- DELETE order id=[' + context.orderId + '] error=[' + message.payload().getMessage() + ']\\n']"
+        },
+        {
+          "implementor": "com.reedelk.file.component.FileWrite",
+          "description": "Write error log file",
+          "fileName": "#[Util.tmpdir() + 'orders_errors.txt']",
+          "mode": "APPEND"
+        },
+        {
+          "implementor": "com.reedelk.core.component.VariableSet",
+          "description": "Set HTTP response error message",
+          "name": "errorMessage",
+          "mimeType": "text/plain",
+          "value": "#['An error occurred while deleting order with id=[' + context.orderId + '] check error log file=[' + Util.tmpdir() + 'orders_errors.txt]']"
+        },
+        {
+          "implementor": "com.reedelk.core.component.VariableSet",
+          "description": "Sets HTTP response staus code to 500 (an error occurred)",
+          "name": "errorStatus",
+          "mimeType": "text/plain",
+          "value": "500"
+        }
+      ]
+    }
+  ]
+}

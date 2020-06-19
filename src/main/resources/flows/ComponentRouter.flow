@@ -1,0 +1,66 @@
+{
+  "id": "7d2f627e-662f-4a47-a151-888e81d98f1f",
+  "title": "Component Router Example",
+  "description": "Route a purchase order to different recipients based on the type of the source sending the order",
+  "flow": [
+    {
+      "implementor": "com.reedelk.rest.component.RESTListener",
+      "description": "POST /order endpoint",
+      "configuration": {"ref": "1ce6668e-b252-4921-910b-61eb085b5d49"},
+      "path": "/order",
+      "method": "POST",
+      "streaming": "AUTO",
+      "response": {
+        "body": "#[message.payload()]",
+        "status": 200
+      },
+      "errorResponse": {
+        "body": "#[error]",
+        "status": 500
+      }
+    },
+    {
+      "implementor": "com.reedelk.json.component.JSONToObject",
+      "description": "JSON to Object description"
+    },
+    {
+      "implementor": "com.reedelk.core.component.VariableSet",
+      "description": "Extract 'source' JSON property value",
+      "name": "source",
+      "mimeType": "text/plain",
+      "value": "#[message.payload().source]"
+    },
+    {
+      "implementor": "com.reedelk.runtime.component.Router",
+      "when": [
+        {
+          "condition": "#[context.source == 'ONLINE_SHOP']",
+          "next": [{
+            "implementor": "com.reedelk.core.component.PayloadSet",
+            "description": "Process Online Shop Order Recipient",
+            "mimeType": "text/plain",
+            "payload": "Online shop order processed"
+          }]
+        },
+        {
+          "condition": "#[context.source == 'LOCAL_STORE']",
+          "next": [{
+            "implementor": "com.reedelk.core.component.PayloadSet",
+            "description": "Process Local Store Order Recipient",
+            "mimeType": "text/plain",
+            "payload": "Local store order processed"
+          }]
+        },
+        {
+          "condition": "otherwise",
+          "next": [{
+            "implementor": "com.reedelk.core.component.PayloadSet",
+            "description": "Process Default Order Recipient",
+            "mimeType": "text/plain",
+            "payload": "Default order processed"
+          }]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "eb747ed7-daf7-48cf-a7d1-951d30590c34",
+  "title": "File Upload HTML Form",
+  "description": "Reads a static HTML page from the project's resources and returns its content",
+  "flow": [
+    {
+      "implementor": "com.reedelk.rest.component.RESTListener",
+      "description": "GET /multipart returns the multipart form HTML page",
+      "configuration": {"ref": "1ce6668e-b252-4921-910b-61eb085b5d49"},
+      "path": "/multipart",
+      "method": "GET",
+      "streaming": "AUTO",
+      "response": {
+        "body": "#[message.payload()]",
+        "status": 200
+      },
+      "errorResponse": {
+        "body": "#[error]",
+        "status": 500
+      }
+    },
+    {
+      "implementor": "com.reedelk.core.component.ResourceReadText",
+      "description": "Reads the multipart HTML page from the project's assets directory",
+      "resourceFile": "assets/multipart_page.html",
+      "autoMimeType": true
+    }
+  ]
+}

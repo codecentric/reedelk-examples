@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Reedelk Runtime" type="REEDELK_RUNTIME_CONFIGURATION" factoryName="REEDELK_RUNTIME_RUN_CONFIGURATION_FACTORY">
+    <option name="RuntimeRunConfiguration-Port" value="9988" />
+    <option name="RuntimeRunConfiguration-VmOptions" value="" />
+    <option name="RuntimeRunConfiguration-RuntimeHomeDirectory" value="$PROJECT_DIR$/reedelk-runtime" />
+    <method v="2" />
+  </configuration>
+</component>

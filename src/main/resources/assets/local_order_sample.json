@@ -1,0 +1,21 @@
+{
+  "shop" : {
+    "name": "Shop 1",
+    "street": "19892  Wayside Lane",
+    "zip": "162389",
+    "orders": [
+      {
+        "id": "2bd38eae-37a0-11ea-978f-2e728ce88125",
+        "items": ["item 99", "item 531", "item 12"]
+      },
+      {
+        "id": "2bd39174-37a0-11ea-978f-2e728ce88125",
+        "items": ["item 67", "item 2", "item 3"]
+      },
+      {
+        "id": "2bd392d2-37a0-11ea-978f-2e728ce88125",
+        "items": ["item 7", "item 93", "item 5"]
+      }
+    ]
+  }
+}

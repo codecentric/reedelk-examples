@@ -1,0 +1,42 @@
+{
+  "id": "3b905984-3bcc-4aba-acf9-26fd91fbcd90",
+  "title": "Places a new order",
+  "description": "The new order is written into a file on the filesystem",
+  "flow": [
+    {
+      "implementor": "com.reedelk.rest.component.RESTListener",
+      "description": "PUT /order endpoint",
+      "configuration": {"ref": "1ce6668e-b252-4921-910b-61eb085b5d49"},
+      "path": "/order/{id}",
+      "method": "PUT",
+      "streaming": "AUTO",
+      "response": {
+        "body": "#[message.payload()]",
+        "status": 200
+      },
+      "errorResponse": {
+        "body": "#[error]",
+        "status": 500
+      }
+    },
+    {
+      "implementor": "com.reedelk.core.component.VariableSet",
+      "description": "Sets orderId context variable  from the HTTP request 'id' path param",
+      "name": "orderId",
+      "mimeType": "text/plain",
+      "value": "#[message.attributes().pathParams.id]"
+    },
+    {
+      "implementor": "com.reedelk.file.component.FileWrite",
+      "description": "Writes a JSON file with the content of the order from the HTTP request body named with the id of the order in a temporary directory",
+      "fileName": "#[Util.tmpdir() + context.orderId + '.json']",
+      "mode": "OVERWRITE"
+    },
+    {
+      "implementor": "com.reedelk.core.component.PayloadSet",
+      "description": "Set response body",
+      "mimeType": "text/plain",
+      "payload": "#['Order with id ' + context.orderId + ' successfully inserted.']"
+    }
+  ]
+}

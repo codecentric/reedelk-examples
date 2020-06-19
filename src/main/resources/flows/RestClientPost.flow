@@ -1,0 +1,42 @@
+{
+  "id": "bd744d27-ed28-4ec0-a425-715a47e3ebdf",
+  "title": "Rest Client POST request",
+  "description": "Sample flow showing how to make a REST POST request with the REST Client",
+  "flow": [
+    {
+      "implementor": "com.reedelk.rest.component.RESTListener",
+      "description": "REST Listener on path: /restclient/post",
+      "configuration": {"ref": "1ce6668e-b252-4921-910b-61eb085b5d49"},
+      "path": "/restclient/post",
+      "method": "GET",
+      "streaming": "AUTO",
+      "response": {
+        "body": "#[message.payload()]",
+        "status": 200
+      },
+      "errorResponse": {
+        "body": "#[error]",
+        "status": 500
+      }
+    },
+    {
+      "implementor": "com.reedelk.core.component.ResourceReadText",
+      "description": "Load Rest Client Post Body JSON file",
+      "resourceFile": "assets/RestClientPostBody.json",
+      "autoMimeType": true
+    },
+    {
+      "implementor": "com.reedelk.rest.component.RESTClient",
+      "description": "POST Request body and custom HTTP headers",
+      "configuration": {"ref": "a7a5ec8f-6282-4cd8-9603-bfc45639884b"},
+      "path": "/post_data.php",
+      "method": "POST",
+      "body": "#[message.payload()]",
+      "headers": {
+        "X-Custom-Header-1": "#['my custom header value 1']",
+        "X-Custom-Header-2": "#[message.attributes().resourcePath]"
+      },
+      "streaming": "AUTO"
+    }
+  ]
+}

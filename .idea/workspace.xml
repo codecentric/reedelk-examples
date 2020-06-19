@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9bb990eb-51d5-44f0-82e5-56e20c2ae581" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="1dXV2IM9aZAjsUeL18b8Cdeupif" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+  </component>
+  <component name="RunManager" selected="Reedelk Runtime Run.Reedelk Runtime">
+    <list>
+      <item itemvalue="Reedelk Module Deploy.reedelk-examples" />
+      <item itemvalue="Reedelk Runtime Run.Reedelk Runtime" />
+    </list>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9bb990eb-51d5-44f0-82e5-56e20c2ae581" name="Default Changelist" comment="" />
+      <created>1592571215395</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1592571215395</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="424" y="181" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592571292506">
+      <screen x="0" y="23" width="1920" height="989" />
+    </state>
+    <state x="424" y="181" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.989@0.23.1920.989" timestamp="1592571292506" />
+    <state x="469" y="156" key="SettingsEditor" timestamp="1592571231473">
+      <screen x="0" y="23" width="1920" height="989" />
+    </state>
+    <state x="469" y="156" key="SettingsEditor/0.23.1920.989@0.23.1920.989" timestamp="1592571231473" />
+  </component>
+</project>

@@ -1,0 +1,47 @@
+{
+  "id": "d116cb86-567e-4031-8fd1-0c1b2e965720",
+  "title": "File Upload example",
+  "description": "Upload file API which writes the content of the uploaded data into a file in a tmp directory.",
+  "flow": [
+    {
+      "implementor": "com.reedelk.rest.component.RESTListener",
+      "description": "POST /multipart file upload endpoint",
+      "configuration": {"ref": "1ce6668e-b252-4921-910b-61eb085b5d49"},
+      "path": "/multipart",
+      "method": "POST",
+      "streaming": "AUTO",
+      "response": {
+        "body": "#[message.payload()]",
+        "status": 200
+      },
+      "errorResponse": {
+        "body": "#[error]",
+        "status": 500
+      }
+    },
+    {
+      "implementor": "com.reedelk.core.component.VariableSet",
+      "description": "Compute the name and path of the file where the uploaded data will be written to",
+      "name": "fileDestination",
+      "mimeType": "text/plain",
+      "value": "#[Util.tmpdir() + message.payload().fileToUpload.attributes.filename]"
+    },
+    {
+      "implementor": "com.reedelk.core.component.PayloadSet",
+      "description": "Sets the current message payload to the content of the uploaded 'fileToUpload' part (from the multipart object)",
+      "mimeType": "application/octet-stream",
+      "payload": "#[message.payload().fileToUpload.data]"
+    },
+    {
+      "implementor": "com.reedelk.file.component.FileWrite",
+      "description": "Write the payload content to the file",
+      "fileName": "#[context.fileDestination]"
+    },
+    {
+      "implementor": "com.reedelk.core.component.PayloadSet",
+      "description": "Sets the response content",
+      "mimeType": "text/html",
+      "payload": "#['File written on: <a href=\"file:///'+ context.fileDestination +'\">' + context.fileDestination + '<\/a> go <a href=\"/api/multipart\">back<\/a>']"
+    }
+  ]
+}
