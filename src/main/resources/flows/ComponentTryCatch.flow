@@ -46,7 +46,7 @@
           "implementor": "com.reedelk.core.component.PayloadSet",
           "description": "Sets the message to be written in the error log file",
           "mimeType": "text/plain",
-          "payload": "#['- DELETE order id=[' + context.orderId + '] error=[' + message.payload().getMessage() + ']\\n']"
+          "payload": "#['- DELETE order id=[' + context.orderId + '] error=[' + message.payload().message + ']\\n']"
         },
         {
           "implementor": "com.reedelk.file.component.FileWrite",
